@@ -56,7 +56,7 @@ RUN ninja install
 ENV PATH $TOOLS_BASE/bin:$PATH
 WORKDIR /opt/riscv/godot
 
-ENV CCFLAGS="-isysroot $SYSROOT --sysroot=$SYSROOT -isystem /opt/riscv/riscv-llvm/libcxx/include -isystem $SYSINCLUDE/riscv64-cartesi-linux-gnu -isystem $SYSROOT/usr/include -isystem $SYSINCLUDE"
+ENV CCFLAGS="-isysroot $SYSROOT --sysroot=$SYSROOT -isystem $SYSINCLUDE/riscv64-cartesi-linux-gnu -isystem $SYSROOT/usr/include -isystem $SYSINCLUDE"
 ENV LINKFLAGS="--sysroot=$SYSROOT"
 ENV GODOTFLAGS="use_llvm=yes arch=rv64 dbus=false alsa=false pulseaudio=false use_sowrap=false fontconfig=false udev=false x11=false touch=false"
 
