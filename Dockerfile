@@ -34,17 +34,15 @@ RUN git clone https://github.com/godotengine/godot.git
 
 RUN mkdir -p riscv-llvm/_build
 WORKDIR /opt/riscv/riscv-llvm/_build
-RUN ln -s ../../clang ../llvm/tools || true
-RUN ln -s ../../libc ../llvm/tools || true
-RUN ln -s ../../libcxx ../llvm/tools || true
 
-RUN cmake -G Ninja -DCMAKE_BUILD_TYPE="Release" \
-  -DBUILD_SHARED_LIBS=True -DLLVM_USE_SPLIT_DWARF=True \
+RUN cmake -G Ninja -DCMAKE_BUILD_TYPE="Debug" \
+  -DCMAKE_SYSTEM_NAME=Linux \
+  -DCMAKE_C_COMPILER=$TOOLS_BASE/bin/riscv64-cartesi-linux-gnu-gcc \
+  -DCMAKE_CXX_COMPILER=$TOOLS_BASE/bin/riscv64-cartesi-linux-gnu-g++ \
   -DCMAKE_INSTALL_PREFIX=$TOOLS_BASE \
-  -DLLVM_OPTIMIZED_TABLEGEN=True -DLLVM_BUILD_TESTS=False \
   -DDEFAULT_SYSROOT=$TOOLS_BASE \
-  -DLLVM_ENABLE_PROJECTS="clang;clang-tools-extra;libc;lld" \
-  -DLLVM_ENABLE_RUNTIMES=all \
+  -DLLVM_ENABLE_PROJECTS="clang" \
+  -DCMAKE_CXX_FLAGS='--sysroot=/opt/riscv/riscv64-cartesi-linux-gnu/riscv64-cartesi-linux-gnu/sysroot -march=rv64ima -mabi=lp64' \
   -DLLVM_DEFAULT_TARGET_TRIPLE="riscv64-cartesi-linux-gnu" \
   -DLLVM_TARGETS_TO_BUILD="RISCV" \
   ../llvm
