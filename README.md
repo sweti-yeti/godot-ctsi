@@ -14,8 +14,15 @@ Currently, blockchain integrated games follow two main patterns:
 
 ## Challenges
 
-The primary challenge with building Godot for Cartesi is in its compiler support. Godot can only be compiled for RISC-V with Clang due to [a bug in gcc with atomics](https://github.com/riscv-collab/riscv-gcc/issues/15). 
+The primary challenge with building Godot for Cartesi is in its compiler support. Godot can only be compiled for RISC-V with Clang due to [a bug in gcc with atomics](https://github.com/riscv-collab/riscv-gcc/issues/15). So, before compiling Godot Engine, we need to compile a Cartesi-compatible LLVM toolchain, which was much easier said than done.
 
-![Failing to find the Cartesi toolchain](img/Screenshot_20230425_000925.png)
+The first attempt felt almost too easy. LLVM built without issues, but then couldn't find some of the headers it needed to build Godot:
 ![Missing headers](img/Screenshot_20230425_075433.png)
+
+That seems like it could be a simple fix to the build flags, but it turns out LLVM didn't build with the cartesi toolchain in the first place, it found the system toolchain and used that instead, ignoring the sysroot and build target I'd set. Building with the Cartesi toolchain came with new challenges:
+![Failing to find the Cartesi toolchain](img/Screenshot_20230425_000925.png)
+
+And some more:
 ![Missing atomics support](img/Screenshot_20230425_005641.png)
+
+I'll continue to press forward with compiling Godot for Cartesi, as I strongly believe this will enable game designs and mechanics that aren't possible with the current state of game and blockchain tooling.
