@@ -15,3 +15,7 @@ Currently, blockchain integrated games follow two main patterns:
 ## Challenges
 
 The primary challenge with building Godot for Cartesi is in its compiler support. Godot can only be compiled for RISC-V with Clang due to [a bug in gcc with atomics](https://github.com/riscv-collab/riscv-gcc/issues/15). 
+
+![Failing to find the Cartesi toolchain](img/Screenshot_20230425_000925.png)
+![Missing headers](img/Screenshot_20230425_075433.png)
+![Missing atomics support](img/Screenshot_20230425_005641.png)
